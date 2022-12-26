@@ -59,7 +59,7 @@ namespace EventBus.Base.SubscriptionManagers
             return eventNameGetter(eventName);
         }
 
-        public Type GetEventTypeByName(string eventName)
+        public Type? GetEventTypeByName(string eventName)
         {
             return _eventTypes.SingleOrDefault(s => s.Name == eventName);
         }
