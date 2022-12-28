@@ -91,8 +91,9 @@ namespace EventBus.RabbitMQ
 
                 consumerChannel.BasicPublish(exchange: eventBusConfig.DefaultTopicName,
                                             routingKey: eventName,
-                                            mandatory: true
-                                            );
+                                            mandatory: true,
+                                            basicProperties: properties,
+                                            body: body);
             });
         }
 
