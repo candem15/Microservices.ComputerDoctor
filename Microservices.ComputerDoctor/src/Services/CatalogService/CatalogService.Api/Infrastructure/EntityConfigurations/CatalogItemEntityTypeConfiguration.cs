@@ -14,6 +14,7 @@ namespace CatalogService.Api.Infrastructure.EntityConfigurations
         {
             builder.ToTable("CatalogItem", CatalogContext.DEFAULT_SCHEMA);
 
+
             builder.Property(ci => ci.Id)
                 .UseHiLo("catalog_hilo")
                 .IsRequired();

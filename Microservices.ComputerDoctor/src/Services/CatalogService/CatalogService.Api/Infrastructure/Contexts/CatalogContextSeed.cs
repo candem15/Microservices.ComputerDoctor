@@ -33,16 +33,16 @@ namespace CatalogService.Api.Infrastructure.Contexts
                 await context.CatalogBrands.AddRangeAsync(GetCatalogBrands());
                 await context.SaveChangesAsync();
             }
-            if (!context.CatalogItems.Any())
-            {
-                await context.CatalogItems.AddRangeAsync(GetCatalogItems());
-                await context.SaveChangesAsync();
-                GetCatalogItemsPictures(setupDirPath, picturePath);
-            }
             if (!context.CatalogTypes.Any())
             {
                 await context.CatalogTypes.AddRangeAsync(GetCatalogTypes());
                 await context.SaveChangesAsync();
+            }
+            if (!context.CatalogItems.Any())
+            {
+                await context.CatalogItems.AddRangeAsync(GetCatalogItems());
+                await context.SaveChangesAsync();
+                //GetCatalogItemsPictures(setupDirPath, picturePath);
             }
         }
 
@@ -50,9 +50,9 @@ namespace CatalogService.Api.Infrastructure.Contexts
         {
             return new List<CatalogType>()
             {
-                new CatalogType {Id=1,Type="Memory"},
-                new CatalogType {Id=2,Type="Power Supply"},
-                new CatalogType {Id=3,Type="Gpu"},
+                new CatalogType {Type="Memory"},
+                new CatalogType {Type="Power Supply"},
+                new CatalogType {Type="Gpu"},
             };
         }
 
@@ -60,13 +60,13 @@ namespace CatalogService.Api.Infrastructure.Contexts
         {
             return new List<CatalogBrand>()
             {
-                new CatalogBrand {Id=1,Brand="CORSAIR"},
-                new CatalogBrand {Id=2,Brand="G.SKILL"},
-                new CatalogBrand {Id=3,Brand="Thermaltake"},
-                new CatalogBrand {Id=4,Brand="EVGA"},
-                new CatalogBrand {Id=5,Brand="MSI"},
-                new CatalogBrand {Id=6,Brand="Acer"},
-                new CatalogBrand {Id=7,Brand="GIGABYTE"},
+                new CatalogBrand {Brand="CORSAIR"},
+                new CatalogBrand {Brand="G.SKILL"},
+                new CatalogBrand {Brand="Thermaltake"},
+                new CatalogBrand {Brand="EVGA"},
+                new CatalogBrand {Brand="MSI"},
+                new CatalogBrand {Brand="Acer"},
+                new CatalogBrand {Brand="GIGABYTE"},
             };
         }
 
