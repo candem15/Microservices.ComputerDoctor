@@ -1,3 +1,9 @@
+using EventBus.Base;
+using EventBus.Base.Abstraction;
+using EventBus.Factory;
+using PaymentService.Api.IntegrationEvents.EventHandlers;
+using PaymentService.Api.IntegrationEvents.Events;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +12,22 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//Custom Services
+builder.Services.AddLogging(configure => configure.AddConsole());
+builder.Services.AddTransient<OrderStartedIntegrationEventHandler>();
+builder.Services.AddSingleton<IEventBus>(sp =>
+{
+    EventBusConfig config = new()
+    {
+        ConnectionRetryCount = 5,
+        EventNameSuffix = "IntegrationEvent",
+        SubscriberClientAppName = "PaymentService",
+        EventBusType = EventBusType.RabbitMQ
+    };
+
+    return EventBusFactory.Create(config, sp);
+});
 
 var app = builder.Build();
 
@@ -21,5 +43,9 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// Create EventBus and listen given events.
+IEventBus eventBus = app.Services.GetRequiredService<IEventBus>();
+eventBus.Subcribe<OrderStartedIntegrationEvent, OrderStartedIntegrationEventHandler>();
 
 app.Run();

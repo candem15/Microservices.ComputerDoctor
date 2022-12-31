@@ -27,7 +27,7 @@ namespace CatalogService.Api.Controllers
         [ProducesResponseType(typeof(PaginatedItems_VM<CatalogItem>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(IEnumerable<CatalogItem>), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> GetItemsAsync([FromQuery] int pageSize = 10, [FromQuery] int pageIndex = 0, string ids = null)
+        public async Task<IActionResult> GetItemsAsync([FromQuery] int pageSize = 10, [FromQuery] int pageIndex = 0, string? ids = null)
         {
             if (!string.IsNullOrEmpty(ids))
             {
@@ -103,7 +103,7 @@ namespace CatalogService.Api.Controllers
         }
 
         [HttpGet]
-        [Route("items/withname//{name:minLength(1)}")]
+        [Route("items/withname/{name:minLength(1)}")]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(PaginatedItems_VM<CatalogItem>), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<PaginatedItems_VM<CatalogItem>>> GetItemsWithNameAsync(string name, [FromQuery] int pageSize = 10, [FromQuery] int pageIndex = 0)
