@@ -269,5 +269,13 @@ namespace CatalogService.Api.Controllers
 
             return itemsOnPage;
         }
+
+        // Ocelot Gateway endpoint testing
+
+        [HttpGet("1")]
+        public async Task<IActionResult> OcelotGatewayTest()
+        {
+            return Ok("Ocelot working");
+        }
     }
 }

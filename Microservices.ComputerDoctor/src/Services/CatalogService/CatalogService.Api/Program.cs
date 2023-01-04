@@ -41,7 +41,7 @@ app.MigrateDbContext<CatalogContext>((context, services) =>
             .Wait();
 });
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

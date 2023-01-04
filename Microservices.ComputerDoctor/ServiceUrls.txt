@@ -1,0 +1,9 @@
+Notification Service => ConsoleApplication
+
+Web.ApiGateway => http://localhost:5000
+
+PaymentService.Api => http://localhost:6000
+OrderService.Api => http://localhost:7000
+BasketService.Api => http://localhost:8000
+IdentityService.Api => http://localhost:9000
+CatalogService.Api => http://localhost:10000
