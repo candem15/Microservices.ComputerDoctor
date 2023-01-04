@@ -1,40 +1,55 @@
 {
   "Routes": [
+    {
+      "UseServiceDiscovery": true,
+      "ServiceName": "CatalogService",
+
+      "DownstreamPathTemplate": "/api/catalog/{everything}",
+      "DownstreamScheme": "http",
+      /*"DownstreamHostAndPorts": [
         {
-            "DownstreamPathTemplate": "/api/catalog/{everything}",
-            "DownstreamScheme": "http",
-            "DownstreamHostAndPorts": [
-                {
-                    "Host": "localhost",
-                    "Port": 10000
-                }
-            ],
-            "UpstreamPathTemplate": "/catalog/{everything}",
-            "UpstreamHttpMethod": [
-                "Get",
-                "Put",
-                "Delete",
-                "Post"
-            ],
-            "UpstreamHost": "http"
-        },
-        {
-            "DownstreamPathTemplate": "/api/auth/{everything}",
-            "DownstreamScheme": "http",
-            "DownstreamHostAndPorts": [
-                {
-                    "Host": "localhost",
-                    "Port": 9000
-                }
-            ],
-            "UpstreamPathTemplate": "/auth/{everything}",
-            "UpstreamHttpMethod": [
-                "Get",
-                "Put",
-                "Delete",
-                "Post"
-            ],
-            "UpstreamHost": "http"
+          "Host": "localhost",
+          "Port": 10000
         }
-    ]
+      ],*/
+
+      "UpstreamPathTemplate": "/catalog/{everything}",
+      "UpstreamHttpMethod": [
+        "Get",
+        "Put",
+        "Delete",
+        "Post"
+      ],
+      "UpstreamScheme": "http"
+    },
+    {
+      "UseServiceDiscovery": true,
+      "ServiceName": "IdentityService",
+
+      "DownstreamPathTemplate": "/api/auth/{everything}",
+      "DownstreamScheme": "http",
+      /*"DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 9000
+        }
+      ],*/
+      "UpstreamPathTemplate": "/auth/{everything}",
+      "UpstreamHttpMethod": [
+        "Get",
+        "Put",
+        "Delete",
+        "Post"
+      ],
+      "UpstreamScheme": "http"
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:5000",
+    "ServiceDiscoryProvider": {
+      "Host": "consul",
+      "Port": 8500,
+      "Type": "Consul"
+    }
+  }
 }

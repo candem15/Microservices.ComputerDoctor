@@ -1,7 +1,6 @@
 using CatalogService.Api.Extensions;
 using CatalogService.Api.Infrastructure;
 using CatalogService.Api.Infrastructure.Contexts;
-using Microsoft.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
@@ -11,7 +10,7 @@ var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 });
 
 // Add services to the container.
-
+builder.Services.ConfigureConsul(builder.Configuration);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -41,7 +40,7 @@ app.MigrateDbContext<CatalogContext>((context, services) =>
             .Wait();
 });
 
-//app.UseHttpsRedirection();
+app.RegisterWithConsul(app.Lifetime);
 
 app.UseAuthorization();
 

@@ -1,20 +1,13 @@
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
+using Ocelot.Provider.Consul;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-/*builder.Host.ConfigureAppConfiguration((host, config) =>
-{
-    config.SetBasePath(host.HostingEnvironment.ContentRootPath)
-        .AddJsonFile("Configurations/ocelot.json")
-        .AddEnvironmentVariables();
-});*/
-IConfiguration configuration = new ConfigurationBuilder()
-                            .AddJsonFile("Configurations/ocelot.json")
-                            .Build();
+builder.Configuration.AddJsonFile("Configurations/ocelot.json");
 
-builder.Services.AddOcelot(configuration);
+builder.Services.AddOcelot().AddConsul();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -30,8 +23,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseOcelot().Wait();
-
-//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
