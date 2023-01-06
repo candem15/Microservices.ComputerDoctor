@@ -42,7 +42,23 @@
         "Post"
       ],
       "UpstreamScheme": "http"
+    },
+    {
+      "UseServiceDiscovery": true,
+      "ServiceName": "BasketService",
+
+      "DownstreamPathTemplate": "/api/basket/{everything}",
+      "DownstreamScheme": "http",
+      "UpstreamPathTemplate": "/basket/{everything}",
+      "UpstreamHttpMethod": [
+        "Get",
+        "Put",
+        "Delete",
+        "Post"
+      ],
+      "UpstreamScheme": "http"
     }
+
   ],
   "GlobalConfiguration": {
     "BaseUrl": "http://localhost:5000",

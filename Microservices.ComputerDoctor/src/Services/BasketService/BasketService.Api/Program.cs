@@ -2,6 +2,8 @@ using BasketService.Api.Core.Application.Repository;
 using BasketService.Api.Core.Application.Services;
 using BasketService.Api.Extensions;
 using BasketService.Api.Infrastructure.Repository;
+using BasketService.Api.IntegrationEvents.EventHandlers;
+using BasketService.Api.IntegrationEvents.Events;
 using EventBus.Base;
 using EventBus.Base.Abstraction;
 using EventBus.Factory;
@@ -22,11 +24,13 @@ builder.Services.AddSingleton<IEventBus>(sp =>
         EventNamePrefix = "BasketService",
         EventBusType = EventBusType.RabbitMQ
     };
+
     return EventBusFactory.Create(config, sp);
 });
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 builder.Services.AddTransient<IIdentityService, IdentityService>();
+builder.Services.AddTransient<OrderCreatedIntegrationEventHandler>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -44,10 +48,15 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
+
 app.UseAuthorization();
 
 app.MapControllers();
 
 app.RegisterWithConsul(app.Lifetime, builder.Configuration);
+
+// Sipariþ oluþturma kuyruðuna abone olup, sipariþin kuyruða ulaþýp ulaþmadýðýndan emin oluyoruz.
+app.Services.GetRequiredService<IEventBus>().Subcribe<OrderCreatedIntegrationEvent, OrderCreatedIntegrationEventHandler>();
 
 app.Run();
