@@ -13,16 +13,18 @@ namespace IdentityService.Api.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IIdentityService _service;
+        private readonly IConfiguration configuration;
 
-        public AuthController(IIdentityService service)
+        public AuthController(IIdentityService service, IConfiguration configuration)
         {
             _service = service;
+            this.configuration = configuration;
         }
 
         [HttpPost]
         public async Task<IActionResult> Login([FromBody]LoginRequestModel requestModel)
         {
-            var result = await _service.Login(requestModel);
+            var result = await _service.Login(requestModel,configuration);
 
             return Ok(result);
         }

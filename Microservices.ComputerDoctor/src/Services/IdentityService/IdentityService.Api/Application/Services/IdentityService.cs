@@ -9,12 +9,11 @@ namespace IdentityService.Api.Application.Services
 {
     public class IdentityService : IIdentityService
     {
-        public async Task<LoginResponseModel> Login(LoginRequestModel model)
+        public async Task<LoginResponseModel> Login(LoginRequestModel model,IConfiguration configuration)
         {
-
             var token = new Token();
 
-            SymmetricSecurityKey securityKey = new(Encoding.UTF8.GetBytes("Owner of ComputerDoctor is Eray"));
+            SymmetricSecurityKey securityKey = new(Encoding.UTF8.GetBytes(configuration["AuthConfig:Secret"]));
 
             //Şifrelenmiş kimliği oluşturuyoruz.
             SigningCredentials signingCredentials = new(securityKey, SecurityAlgorithms.HmacSha256);

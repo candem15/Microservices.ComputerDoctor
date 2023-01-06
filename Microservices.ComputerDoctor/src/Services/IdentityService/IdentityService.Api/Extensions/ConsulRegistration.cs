@@ -1,4 +1,5 @@
 ﻿using Consul;
+using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.AspNetCore.Http.Features;
 
@@ -17,22 +18,17 @@ namespace IdentityService.Api.Extensions
             return services;
         }
 
-        public static IApplicationBuilder RegisterWithConsul(this IApplicationBuilder builder, IHostApplicationLifetime lifetime)
+        public static IApplicationBuilder RegisterWithConsul(this IApplicationBuilder builder, IHostApplicationLifetime lifetime, IConfiguration configuration)
         {
-            var consulClient = builder.ApplicationServices.GetRequiredService<ConsulClient>();
+            var consulClient = builder.ApplicationServices.GetRequiredService<IConsulClient>();
 
             var loggingFactory = builder.ApplicationServices.GetRequiredService<ILoggerFactory>();
 
             var logger = loggingFactory.CreateLogger<IApplicationBuilder>();
 
-            var features = builder.Properties["server.Features"] as FeatureCollection;
 
-            var adresses = features.Get<IServerAddressesFeature>();
-
-            var address = adresses.Addresses.First();
-
-
-            var uri = new Uri(address);
+            // Server ip adresini getiriyoruz.
+            var uri = new Uri(configuration["Kestrel:Endpoints:Http:Url"]);
             var registration = new AgentServiceRegistration()
             {
                 ID = $"IdentityService",

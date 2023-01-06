@@ -40,7 +40,9 @@ app.MigrateDbContext<CatalogContext>((context, services) =>
             .Wait();
 });
 
-app.RegisterWithConsul(app.Lifetime);
+//app.UseHttpsRedirection();
+
+app.RegisterWithConsul(app.Lifetime,builder.Configuration);
 
 app.UseAuthorization();
 

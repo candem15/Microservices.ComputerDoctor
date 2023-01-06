@@ -1,7 +1,11 @@
 using IdentityService.Api.Application.Services;
 using IdentityService.Api.Extensions;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(new WebApplicationOptions
+{
+    Args = args,
+    ContentRootPath = Directory.GetCurrentDirectory()
+});
 
 // Add services to the container.
 builder.Services.ConfigureConsul(builder.Configuration);
@@ -19,10 +23,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+//app.UseHttpsRedirection();
 
-app.RegisterWithConsul(app.Lifetime);
-
-app.UseHttpsRedirection();
+app.RegisterWithConsul(app.Lifetime, builder.Configuration);
 
 app.UseAuthorization();
 

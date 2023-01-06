@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.AspNetCore.Http.Features;
 
-namespace CatalogService.Api.Extensions
+namespace BasketService.Api.Extensions
 {
     public static class ConsulRegistration
     {
@@ -26,15 +26,16 @@ namespace CatalogService.Api.Extensions
 
             var logger = loggingFactory.CreateLogger<IApplicationBuilder>();
 
-            // Server ip adresini getirip servisi consul'a kayıt ediyoruz.
+
+            // Server ip adresini getiriyoruz.
             var uri = new Uri(configuration["Kestrel:Endpoints:Http:Url"]);
             var registration = new AgentServiceRegistration()
             {
-                ID = $"CatalogService",
-                Name = "CatalogService",
+                ID = $"BasketService",
+                Name = "BasketService",
                 Address = $"{uri.Host}",
                 Port = uri.Port,
-                Tags = new[] { "Catalog Service", "Catalog" }
+                Tags = new[] { "Basket Service", "Basket" }
             };
 
             logger.LogInformation("Registring with Consul");
