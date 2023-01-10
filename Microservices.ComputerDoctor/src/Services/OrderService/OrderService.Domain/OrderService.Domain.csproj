@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Abp" Version="8.0.0" />
+    <PackageReference Include="MediatR" Version="11.1.0" />
+  </ItemGroup>
+
 </Project>
